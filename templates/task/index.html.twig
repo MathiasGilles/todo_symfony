@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task{% endblock %}
+
+{% block body %}
+
+{% if tasks is not empty%}
+
+<a class="btn btn-primary" href="{{path('task_new')}}">+create Task</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Date</td>
+            <td>User</td>
+            <td>State</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for task in tasks %}
+        <tr>
+            <td>{{task.name}}</td>
+            <td>{{task.deadline|date("m/d/Y")}}</td>
+            <td>{{task.user}}</td>
+            {% if task.state == true %}
+            <td>Tâche terminé</td>
+            {% else %}
+            <td>Tâche en cours</td>
+            {% endif %}
+            <td>
+                <a href="{{path('task_edit', {id:task.id})}}"><i class="far fa-edit"></i></a>
+                <a href="{{path('task_delete', {id:task.id})}}"><i class="danger far fa-trash"></i></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+
+Il n'y a pas de tâches
+
+{% endif %}
+{% endblock %}

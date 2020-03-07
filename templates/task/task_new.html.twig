@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} New Task {% endblock %}
+
+{% block body %}
+
+{% if editTitle %}
+
+<h2>Modifier une tâche </h2>
+
+{% else %}
+
+<h2>Ajouter une tâche</h2>
+
+{% endif %}
+
+{{form_start(formTask)}}
+
+{{form_row(formTask.name, {'attr': {'placeholder': "Nom de la tâche"}})}}
+{{form_row(formTask.deadline)}}
+{{form_row(formTask.state)}}
+{{form_row(formTask.user)}}
+
+
+
+<button type="submit" class="btn btn-success">
+    {% if editMode %}
+    Enregistrer
+    {% else %}
+    Ajouter la tâche
+    {% endif %}
+</button>
+{{form_end(formTask)}}
+
+{% endblock %}

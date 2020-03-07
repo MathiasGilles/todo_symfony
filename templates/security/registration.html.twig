@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block body %}
+
+<h2>Inscription</h2>
+
+{{form_start(formUser)}}
+
+{{form_row(formUser.email,{'attr':{'placeholder':"Email adress"}})}}
+
+{{form_row(formUser.firstName,{'attr':{'placeholder':"First Name"}})}}
+
+{{form_row(formUser.lastName,{'attr':{'placeholder':"Last Name"}})}}
+
+{{form_row(formUser.password,{'attr':{'placeholder':"Password"}})}}
+
+{{form_row(formUser.confirm_password,{'attr':{'placeholder':"Confirm password"}})}}
+
+<button class="btn btn-primary" type="submit">Enregister</button>
+
+{{form_end(formUser)}}
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+<a class="btn btn-primary" href="{{path('security_registration')}}">+create User</a>
+<table class="table">
+    <thead>
+        <tr>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Email</td>
+            <td>Tasks</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td></td>
+                <td>
+                    <a href="{{path('user_edit', {id:user.id})}}"><i class="far fa-edit"></i></a>
+                   <a href="{{path('user_delete', {id:user.id})}}"><i class="danger far fa-trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
