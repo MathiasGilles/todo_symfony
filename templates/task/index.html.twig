@@ -6,13 +6,11 @@
 
 {% if tasks is not empty%}
 
-<a class="btn btn-primary" href="{{path('task_new')}}">+create Task</a>
-
 <table class="table">
     <thead>
         <tr>
             <td>Name</td>
-            <td>Date</td>
+            <td>Deadline</td>
             <td>User</td>
             <td>State</td>
             <td>Action</td>
@@ -23,15 +21,23 @@
         <tr>
             <td>{{task.name}}</td>
             <td>{{task.deadline|date("m/d/Y")}}</td>
-            <td>{{task.user}}</td>
+            <td>
+                {% if task.user != null %}
+                {{task.user.firstName}}
+                {% endif %}
+           </td>
             {% if task.state == true %}
             <td>Tâche terminé</td>
             {% else %}
             <td>Tâche en cours</td>
             {% endif %}
             <td>
-                <a href="{{path('task_edit', {id:task.id})}}"><i class="far fa-edit"></i></a>
-                <a href="{{path('task_delete', {id:task.id})}}"><i class="danger far fa-trash"></i></a>
+                {% if app.user %}
+                    <a href="{{path('task_edit', {id:task.id})}}"><i class="far fa-edit"></i></a>
+                    <a href="{{path('task_delete', {id:task.id})}}"><i class="fas fa-trash"></i></a>
+                {% else %}
+                <span>Connect to do something</span>
+                {% endif %}    
             </td>
         </tr>
     {% endfor %}

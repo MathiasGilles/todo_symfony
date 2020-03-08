@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{user.firstName}}{% endblock %}
+
+{% block body %}
+    <div class="pt-3 mx-3">
+        <div class="p-3 border-light  card shadow">
+            <h2 class="mx-auto">{{user.firstName}} {{user.lastName}} </h2>
+            <p class="mx-auto">{{user.email}}</p>
+            <p>
+            <h3>Tasks: </h3>
+                {% for task in user.tasks %}
+                    <div>
+                        <h4 class="d-inline-block">
+                            {{task.name}}                               
+                        </h4>
+                        {% if task.state %}
+                            <span class="badge badge-pill badge-success">Finish</span>
+                        {% else %}
+                            <span class="badge badge-pill badge-danger">Work in progress</span>
+                        {% endif %}
+                                             
+                        <p class="font-weight-light">{{task.deadline|date("F jS \\a\\t g:ia")}}</p>
+                        <a href="{{path('task_edit', {id:task.id})}}"><i class="text-warning far fa-edit"></i></a>
+                        <a href="{{path('task_delete', {id:task.id})}}"><i class="text-danger fas fa-trash"></i></a>
+                    </div>
+                    
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserType;
+use App\Form\EditUserType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +17,14 @@ class UserController extends AbstractController
     public function index(UserRepository $repo)
     {
         $users = $repo->findAll();
+        if ($user = null) {
+            return $this->render('user/index.html.twig');
+        }
+        else{
         return $this->render('user/index.html.twig', [
             'users' => $users,
         ]);
+        }
     }
 
     /**
@@ -31,25 +37,44 @@ class UserController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
             $user = $repo->find($id);
 
-            $form = $this->createForm(UserType::class, $user);
+            $form = $this->createForm(EditUserType::class, $user);
             $form->handleRequest($request);
 
             $manager->persist($user);
             $manager->flush();
-
-            return $this->redirectToRoute('user');
         }
-        return $this->render('security/registration.html.twig',[
-            'formUser' => $form->createView(),
+        return $this->render('user/user_edit.html.twig',[
+            'formEditUser' => $form->createView(),
         ]);
 
     }
 
     /**
-     * @Route("/user/delet/{id}",name="user_delete")
+     * @Route("/user/delete/{id}",name="user_delete")
      */
-    public function delete()
-    {
+    public function delete($id = null ,Request $request,UserRepository $repo)
+    {   
+        
+        if ($id != null) {
+            $user = $repo->find($id);
+            $manager=$this->getDoctrine()->getManager();
+            $manager->remove($user);
+            $manager->flush();
 
+        }
+        return $this->redirectToRoute('user');
+    }
+
+    /**
+     * @Route("/user/{id}",name="user_detail")
+     */
+    public function detail($id,UserRepository $repo)
+    {
+        $user = $repo->find($id);
+
+        return $this->render('user/user_detail.html.twig',[
+            'user' => $user,
+        ]);
     }
 }   
+

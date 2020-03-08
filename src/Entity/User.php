@@ -26,7 +26,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180)
-     * @Assert\Email(message="{{value}} is not a valid email")
+     * @Assert\Email(message="Unvalid email adress")
      * @Assert\NotBlank
      */
     private $email;
@@ -76,15 +76,15 @@ class User implements UserInterface
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")
-     */
-    private $tasks;
-
-    /**
      * @Assert\EqualTo(propertyPath="password", message="Your password are not the same")
      * @Assert\NotBlank
      */
     public $confirm_password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user",orphanRemoval=true)
+     */
+    private $tasks;
 
     public function __construct()
     {

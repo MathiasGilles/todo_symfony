@@ -3,7 +3,9 @@
 {% block title %}Users{% endblock %}
 
 {% block body %}
-<a class="btn btn-primary" href="{{path('security_registration')}}">+create User</a>
+
+{% if users is not empty %}
+
 <table class="table">
     <thead>
         <tr>
@@ -20,14 +22,24 @@
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>
-                <td></td>
+                <td><a href="{{path('user_detail',{id:user.id})}}"><i class="fas fa-info"></i></a></td>
                 <td>
-                    <a href="{{path('user_edit', {id:user.id})}}"><i class="far fa-edit"></i></a>
-                   <a href="{{path('user_delete', {id:user.id})}}"><i class="danger far fa-trash"></i></a>
+                    {% if app.user%}
+                        <a href="{{path('user_edit', {id:user.id})}}"><i class="far fa-edit"></i></a>
+                        <a href="{{path('user_delete', {id:user.id})}}"><i class="fas fa-trash"></i></a>
+                    {% else %}
+                        <span>Connect to do something</span>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
+
+{% else %}
+
+<p class="mx-auto">There is no users</p>
+
+{% endif %}
 
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification {% endblock %}
+
+{% block body %}
+
+{{form_start(formEditUser)}}
+
+{{form_row(formEditUser.firstName)}}
+{{form_row(formEditUser.lastName)}}
+{{form_row(formEditUser.email)}}
+
+<button class="btn btn-primary" type="submit">Enregistrer</button>
+
+{{form_end(formEditUser)}}
+{% endblock %}

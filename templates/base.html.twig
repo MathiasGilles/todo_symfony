@@ -11,14 +11,8 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% if app.user %}
-        <a class="btn btn-primary" href="{{path('app_logout')}}">LogOut</a>
-        {% else %}
-        <a class="btn btn-primary" href="{{path('security_login')}}">LogIn</a>
-        <a class="btn btn-primary" href="{{path('security_registration')}}">Inscription</a>
-        {% endif %}
-        <a class="btn btn-primary" href="{{path('user')}}">Users</a>
-        <a class="btn btn-primary" href="{{path('task')}}">Tasks</a>
+    {% include "component/header.html.twig" %}
+       
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
         <script src="https://kit.fontawesome.com/fc39d6dffa.js"
