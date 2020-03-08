@@ -63,4 +63,16 @@ class TaskController extends AbstractController
         }
         return $this->redirectToRoute('task');
     }
+
+    /**
+     * @Route("/task/detail/{id}",name="task_detail")
+     */
+    public function detail($id,TaskRepository $repo){
+
+        $task = $repo->find($id);
+
+        return $this->render('task/task_detail.html.twig',[
+            'task' => $task,
+        ]);
+    }
 }
