@@ -17,22 +17,15 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $repo)
     {
-        try {
-
-            $users = $repo->findAll();
-            if ($user = null) {
-                return $this->render('user/index.html.twig');
-            } else {
-                return $this->render('user/index.html.twig', [
-                    'users' => $users,
-                ]);
-            }
-
-
-        } catch (\Throwable $th) {
-            $th->getMessage();
+        $users = $repo->findAll();
+        if ($user = null) {
+            return $this->render('user/index.html.twig');
         }
-            
+        else{
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+        ]);
+        }
     }
 
     /**
