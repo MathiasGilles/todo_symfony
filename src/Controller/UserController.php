@@ -7,6 +7,7 @@ use App\Form\EditUserType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
@@ -16,15 +17,22 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $repo)
     {
-        $users = $repo->findAll();
-        if ($user = null) {
-            return $this->render('user/index.html.twig');
+        try {
+
+            $users = $repo->findAll();
+            if ($user = null) {
+                return $this->render('user/index.html.twig');
+            } else {
+                return $this->render('user/index.html.twig', [
+                    'users' => $users,
+                ]);
+            }
+
+
+        } catch (\Throwable $th) {
+            $th->getMessage();
         }
-        else{
-        return $this->render('user/index.html.twig', [
-            'users' => $users,
-        ]);
-        }
+            
     }
 
     /**
@@ -76,5 +84,6 @@ class UserController extends AbstractController
             'user' => $user,
         ]);
     }
+
 }   
 
